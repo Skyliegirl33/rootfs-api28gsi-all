@@ -2,11 +2,11 @@ name: droidian rootfs-builder
 
 on:
   push:
+    branches:
+      - '**'
     tags:
       - '**'
-  schedule:
-    - cron: "59 23 * * *"
-
+      
 jobs:
   once:
     runs-on: ubuntu-20.04
@@ -120,55 +120,19 @@ jobs:
           asset_content_type: application/gzip
 
       - name: "Check adaptation file existence"
-        id: check_adaptation_fxtec_pro1
+        id: check_adaptation_oneplus_guacamole
         uses: andstor/file-existence-action@v1
         with:
-          files: "droidian-adaptation-fxtec-pro1-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip"
+          files: "droidian-adaptation-oneplus-guacamole-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip"
 
-      - name: Upload adaptation-fxtec-pro1 sideload
-        if: steps.check_adaptation_fxtec_pro1.outputs.files_exists == 'true'
-        id: upload-sideload-pro1
+      - name: Upload adaptation-oneplus-guacamole sideload
+        if: steps.check_adaptation_oneplus_guacamole.outputs.files_exists == 'true'
+        id: upload-sideload-guacamole
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.once.outputs.upload_url }}
-          asset_path: ./droidian-adaptation-fxtec-pro1-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_name: droidian-adaptation-fxtec-pro1-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_content_type: application/gzip
-
-      - name: "Check adaptation file existence"
-        id: check_adaptation_google_sargo
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "droidian-adaptation-google-sargo-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip"
-
-      - name: Upload adaptation-google-sargo sideload
-        if: steps.check_adaptation_google_sargo.outputs.files_exists == 'true'
-        id: upload-sideload-sargo
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.once.outputs.upload_url }}
-          asset_path: ./droidian-adaptation-google-sargo-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_name: droidian-adaptation-google-sargo-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_content_type: application/gzip
-
-      - name: "Check adaptation file existence"
-        id: check_adaptation_volla_yggdrasil
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "droidian-adaptation-volla-yggdrasil-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip"
-
-      - name: Upload adaptation-volla-yggdrasil sideload
-        if: steps.check_adaptation_volla_yggdrasil.outputs.files_exists == 'true'
-        id: upload-sideload-yggdrasil
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.once.outputs.upload_url }}
-          asset_path: ./droidian-adaptation-volla-yggdrasil-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_name: droidian-adaptation-volla-yggdrasil-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
+          asset_path: ./droidian-adaptation-oneplus-guacamole-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
+          asset_name: droidian-adaptation-oneplus-guacamole-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
           asset_content_type: application/gzip
