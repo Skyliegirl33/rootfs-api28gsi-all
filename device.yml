@@ -7,21 +7,6 @@ architecture: {{ $architecture }}
 actions:
 
   - action: recipe
-    description: Generate api28gsi phone rootfs
-    recipe: rootfs-templates/gsi_full_phone.yaml
-    variables:
-      architecture: {{ $architecture }}
-      apilevel: 28
-
-  - action: recipe
-    description: Get devtools sideload's zip
-    recipe: rootfs-templates/recipes/sideload-create.yaml
-    variables:
-      architecture: {{ $architecture }}
-      sideload_name: droidian-devtools-{{ $architecture }}{{ $suffix }}
-      packages: droidian-devtools adaptation-hybris-devtools
-
-  - action: recipe
     description: Get adaptation-oneplus-guacamole sideload's zip
     recipe: rootfs-templates/recipes/sideload-create.yaml
     variables:
