@@ -98,28 +98,6 @@ jobs:
       - name: Build rootfs
         run: docker exec $CONTAINER_HASH /bin/sh -c 'cd /buildd/sources; debos -t architecture:${{ matrix.debos_arch }} -t suffix:${{ env.release_suffix }} device.yml'
 
-      - name: Upload Rootfs image
-        id: upload-rootfs
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.once.outputs.upload_url }}
-          asset_path: ./droidian-rootfs-api28gsi-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_name: droidian-rootfs-api28gsi-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_content_type: application/gzip
-
-      - name: Upload devtools sideload
-        id: upload-sideload
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.once.outputs.upload_url }}
-          asset_path: ./droidian-devtools-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_name: droidian-devtools-${{ matrix.debos_arch }}${{ env.release_suffix }}.zip
-          asset_content_type: application/gzip
-
       - name: "Check adaptation file existence"
         id: check_adaptation_oneplus_guacamole
         uses: andstor/file-existence-action@v1
